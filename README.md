@@ -1,4 +1,4 @@
-# gshop
+# gshop-client
 
 ## 项目目录结构
 
