@@ -9,51 +9,53 @@
 - router目录：配置路由
 - store目录：vuex
 - utils目录：缓存的操作
-
-
+- jsconfig.json文件：让 vscode 提示 `@` 开头的模块路径引入
 
 ## 路由
 
 ### 声明式路由和编程式路由
 
-路由分为声明式路由和跳转和编程式路由跳转
+路由分为声明式路由和跳转和编程式路由跳转：
+
+> - 声明式路由：`<router-link to="/home">Home</router-link>`  配合  `<router-view></router-view>`
+> - 编程式路由：`this.$router.push()` 和 `this.$router.replace()`
+
+
 
 编程式路由跳转跳转的时候还是当前的路径地址，多次点击的时候会出现 bug，解决：
 
-1. 在路由跳转的时候传入成功或者失败的回调，或者调用 `catch` 方法内部传入空回调
+> 1. 在路由跳转的时候传入成功或者失败的回调，或者调用 `catch` 方法内部传入空回调（push 和 replace 解决原理相同）
+>
+>    ```js
+>    // 传入成功的回调，成功的回调内部的代码是可以执行的
+>    this.$router.push({ name: 'search' }, () => {})
+>    
+>    // 传入失败的回调
+>    this.$router.push({ name: 'search' }, undefined, () => {})
+>    
+>    // 指定一个catch()传入回调
+>    this.$router.push({ name: 'search' }.catch() => {})
+>    ```
+>
+>    
+>
+> 2. 在路由器对象中重写路由器对象的 `push` 和 `replace` 原型方法，内部在成功或者失败的参数上传入默认空函数或者 `catch` 方法
+>
+>    ```js
+>    // 处理push方法路由跳转
+>    const VueRouterPush = VueRouter.prototype.push
+>    VueRouter.prototype.push = function push (location, onComplete = () => {}, onAbort) {
+>      return VueRouterPush.call(this, location, onComplete, onAbort)
+>    }
+>    
+>    // 处理replace方法路由跳转
+>    const VueRouterReplace = Vue.prototype.replace
+>    VueRouter.prototype.replace = function replace (location, onComplete, onAbort = () => {}) {
+>      return VueRouterReplace.call(this, location, onComplete, onAbort)
+>    }
+>    ```
 
-   - 方法1：每次路由跳转都要设置一个成功的回调或者失败的回调（push 和 replace 解决原理相同）
 
-     ```js
-     // 传入成功的回调，成功的回调内部的代码是可以执行的
-     this.$router.push({ name: 'search' }, () => {})
-     
-     // 传入失败的回调
-     this.$router.push({ name: 'search' }, undefined, () => {})
-     
-     // 指定一个catch()传入回调
-     this.$router.push({ name: 'search' }.catch() => {})
-     ```
-
-     
-
-2. 在路由器对象中重写路由器对象的 `push` 和 `replace` 原型方法，内部在成功或者失败的参数上传入默认空函数或者 `catch` 方法
-
-   ```js
-   // 处理push方法路由跳转
-   const VueRouterPush = VueRouter.prototype.push
-   VueRouter.prototype.push = function push (location, onComplete = () => {}, onAbort) {
-     return VueRouterPush.call(this, location, onComplete, onAbort)
-   }
-   
-   // 处理replace方法路由跳转
-   const VueRouterReplace = Vue.prototype.replace
-   VueRouter.prototype.replace = function replace (location, onComplete, onAbort = () => {}) {
-     return VueRouterReplace.call(this, location, onComplete, onAbort)
-   }
-   ```
-
-   
 
 ### 路由的传参
 
@@ -61,6 +63,8 @@
 
 1. `$router` 路由对象，可以调用相关的方法，实现编程式的路由跳转
 2. `$route` 路由组件信息对象，可以获取路由传递的参数数据信息
+
+
 
 编程式路由进行跳转并传参的时候 `params` 和 `query` 的方式是有区别的：
 
@@ -94,8 +98,27 @@
 >    this.$route.push({ name: 'search', query: { name: username } }) // - 编程式路由跳转写法
 >    { name: 'search', path: '/search', component: Search } // - 注册路由写法
 >    ```
->
->    
+
+
+
+### params方式没有参数跳转处理
+
+判断有没有参数，注意注册路由的时候要在占位符后面加个问号
+
+```js
+// 判断是否有关键字
+const keyword = this.keyword.trim()
+if (keyword) {
+  this.$router.push({ name: 'search', params: { keyword } })
+} else { // 没有参数也需要跳转
+  this.$router.push({ name: 'search' })
+}
+
+// 注册路由写法
+{ name: 'search', path: '/search/:keyword?', component: Search}
+```
+
+
 
 
 
