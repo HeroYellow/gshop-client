@@ -44,13 +44,13 @@
 >    ```js
 >    // 处理push方法路由跳转
 >    const VueRouterPush = VueRouter.prototype.push
->    VueRouter.prototype.push = function push (location, onComplete = () => {}, onAbort) {
+>    VueRouter.prototype.push = function (location, onComplete = () => {}, onAbort) {
 >      return VueRouterPush.call(this, location, onComplete, onAbort)
 >    }
 >    
 >    // 处理replace方法路由跳转
->    const VueRouterReplace = Vue.prototype.replace
->    VueRouter.prototype.replace = function replace (location, onComplete, onAbort = () => {}) {
+>    const VueRouterReplace = VueRouter.prototype.replace
+>    VueRouter.prototype.replace = function (location, onComplete, onAbort = () => {}) {
 >      return VueRouterReplace.call(this, location, onComplete, onAbort)
 >    }
 >    ```
