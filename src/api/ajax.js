@@ -7,7 +7,7 @@ const ajax = axios.create({
   timeout: 7000
 })
 
-// TODO 设置拦截器
+// TODO Start 设置拦截器
 // # 请求拦截器
 ajax.interceptors.request.use(config => {
   return config
@@ -19,6 +19,7 @@ ajax.interceptors.response.use(response => {
 }, error => {
   console.log(error)
 })
+// TODO End 设置拦截器
 
 // # 暴露ajax
 export default ajax

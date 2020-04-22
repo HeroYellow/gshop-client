@@ -120,5 +120,19 @@ if (keyword) {
 
 
 
+## 让 vscode 提示 `@` 开头的模块路径引入
 
+在根目录创建 `jsconfig.json` 文件
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+        "@/*": ["src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
+```
 
