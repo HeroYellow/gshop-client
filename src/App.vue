@@ -10,7 +10,7 @@
 <script>
 // - 引入Header组件
 import Header from './components/Header'
-// - 引入Footer组件 
+// - 引入Footer组件
 import Footer from './components/Footer'
 
 export default {

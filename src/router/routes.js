@@ -16,6 +16,6 @@ export default [
   { path: '/register', meta: { isHideFooter: true }, component: Register }, 
   // - Search注册路由组件
   { name: 'search', path: '/search/:keyword?', component: Search }, 
-  // - 重定向到Home路由组件
+  // - 重定向到首页
   { path: '/', redirect: '/' }, 
 ]
