@@ -221,11 +221,11 @@
 
 ## 脚手架 2 和脚手架 3 的 eslint 的设置
 
-**脚手架 2：**脚手架 2 中可以在 `.eslintignore` 文件或者在 `eslintrc.js` 中对 eslint 语法进行关闭操作
+**脚手架 2：** 脚手架 2 中可以在 `.eslintignore` 文件或者在 `eslintrc.js` 中对 eslint 语法进行关闭操作
 
 
 
-**脚手架 3：**脚手架 3 中可以在 `package.json` 文件中的 `"rules": {}` 关闭相关的 eslint 语法检测，或者在 `vue.config.js` 文件中进行配置的方式关闭 eslint 语法检测
+**脚手架 3：** 脚手架 3 中可以在 `package.json` 文件中的 `"rules": {}` 关闭相关的 eslint 语法检测，或者在 `vue.config.js` 文件中进行配置的方式关闭 eslint 语法检测
 
 > **package.json：**
 >
